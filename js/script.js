@@ -2,17 +2,17 @@
 var table = "";
 var tentativas = 0;
 produtos = [
-	{ nome: 'Banana A Unidade', valor: 2.50, imagem: 'https://cdn-icons-png.flaticon.com/512/6482/6482627.png' },
-	{ nome: 'Maçã Argentina A Unidade', valor: 3.50, imagem: 'https://cdn-icons-png.flaticon.com/512/812/812900.png' },
+	{ nome: 'Banana A Unidade', valor: 3.60, imagem: 'https://cdn-icons-png.flaticon.com/512/6482/6482627.png' },
+	{ nome: 'Maçã Argentina A Unidade', valor: 5.99, imagem: 'https://cdn-icons-png.flaticon.com/512/812/812900.png' },
 	{ nome: 'Ovo A Unidade', valor: 2.35, imagem: 'https://cdn-icons-png.flaticon.com/512/811/811434.png' },
-	{ nome: 'Leite integral 1L', valor: 4.50, imagem: 'https://cdn-icons-png.flaticon.com/512/869/869664.png' },
-	{ nome: 'Suco de Uva Natural 1L', valor: 4.95, imagem: 'https://images.emojiterra.com/google/android-11/512px/1f9c3.png' },
-	{ nome: 'Sucrilhos 150g', valor: 8.70, imagem: 'https://cdn-icons-png.flaticon.com/512/6785/6785921.png' },
+	{ nome: 'Leite integral 1L', valor: 5.50, imagem: 'https://cdn-icons-png.flaticon.com/512/869/869664.png' },
+	{ nome: 'Suco de Uva Natural 1L', valor: 4.99, imagem: 'https://images.emojiterra.com/google/android-11/512px/1f9c3.png' },
+	{ nome: 'Sucrilhos 150g', valor: 11.70, imagem: 'https://cdn-icons-png.flaticon.com/512/6785/6785921.png' },
 	{ nome: 'Macarrão instantâneo 350g', valor: 3.40, imagem: 'https://cdn-icons-png.flaticon.com/512/8119/8119008.png' },
 	{ nome: 'Cookies de chocolates 200g', valor: 7.35, imagem: 'https://cdn-icons-png.flaticon.com/512/9622/9622163.png' },
-	{ nome: 'Milho verde em conserva 285g', valor: 6.30, imagem: 'https://static.vecteezy.com/ti/vetor-gratis/p3/14187773-icone-de-lata-de-milho-estilo-cartoon-vetor.jpg' },
-	{ nome: 'Achocolatado Tobby 800g', valor: 9.45, imagem: '/imagem/Achocolatado.png' },
-	{ nome: 'Maça Verde A unidade', valor: 3.55, imagem: 'https://images.vexels.com/media/users/3/185223/isolated/preview/841c68d2314d6dc10c6b33480bbca0b3-maca-verde-fruta-plana.png' },
+	{ nome: 'Milho verde em conserva 285g', valor: 6.25, imagem: 'https://static.vecteezy.com/ti/vetor-gratis/p3/14187773-icone-de-lata-de-milho-estilo-cartoon-vetor.jpg' },
+	{ nome: 'Achocolatado Tobby 800g', valor: 9.49, imagem: '/imagem/Achocolatado.png' },
+	{ nome: 'Maça Verde A unidade', valor: 5.99, imagem: 'https://images.vexels.com/media/users/3/185223/isolated/preview/841c68d2314d6dc10c6b33480bbca0b3-maca-verde-fruta-plana.png' },
 ];
 
 $(document).ready(function() {
