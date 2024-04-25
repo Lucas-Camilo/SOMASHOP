@@ -143,7 +143,7 @@ function Finalizar() {
 		if (troco == trocoInformado) {
 			$('#totalInput').addClass('input-verde');
 			$('#myModal').modal('hide');
-			playAudio();
+			playAudio("acertoAudio");
 		}
 		else {
 			if (tentativas < 3) {
@@ -156,6 +156,7 @@ function Finalizar() {
 				$('#totalInput').addClass('input-vermelho');
 				$('#RespostaFinal').modal('show');
 			}
+			playAudio("errorAudio");
 		}
 	} else {
 		alert("Erro ao calcular o total da compra.");
@@ -187,8 +188,8 @@ function Cancelamento() {
 	$("#linhaQuerCancelar").val("");
 }
 
-function playAudio() {
-	var audio = document.getElementById("meuAudio");
+function playAudio(audioTag) {
+	var audio = document.getElementById(audioTag);
 	audio.currentTime = 2;
 	audio.play();
 }
