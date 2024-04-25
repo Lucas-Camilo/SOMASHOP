@@ -11,7 +11,7 @@ produtos = [
 	{ nome: 'Macarrão instantâneo 350g', valor: 3.40, imagem: 'https://cdn-icons-png.flaticon.com/512/8119/8119008.png' },
 	{ nome: 'Cookies de chocolates 200g', valor: 7.35, imagem: 'https://cdn-icons-png.flaticon.com/512/9622/9622163.png' },
 	{ nome: 'Milho verde em conserva 285g', valor: 6.30, imagem: 'https://static.vecteezy.com/ti/vetor-gratis/p3/14187773-icone-de-lata-de-milho-estilo-cartoon-vetor.jpg' },
-	{ nome: 'Achocolatado Tobby 800g', valor: 9.45, imagem: 'https://cdn-icons-png.flaticon.com/512/332/332961.png' },
+	{ nome: 'Achocolatado Tobby 800g', valor: 9.45, imagem: '/imagem/Achocolatado.png' },
 	{ nome: 'Maça Verde A unidade', valor: 3.55, imagem: 'https://images.vexels.com/media/users/3/185223/isolated/preview/841c68d2314d6dc10c6b33480bbca0b3-maca-verde-fruta-plana.png' },
 ];
 
