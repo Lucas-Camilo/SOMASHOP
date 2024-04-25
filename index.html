@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Caixa de Mercado</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+	<link href='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css' rel='stylesheet'>
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css' rel='stylesheet'>
+	<link href="https://fonts.cdnfonts.com/css/arturo" rel="stylesheet">
+</head>
+
+<body>
+	<div id="container1">
+		<div id="logo">
+			<img src="/images/1.png" alt="logo">
+			<h1>SOMA SHOP SUPERMERCADO</h1>
+
+		</div>
+		<audio id="meuAudio" src="Som/Som de dinheiro - Caixa registradora.mp3" preload="auto"></audio>
+		<div id="Lista-Produtos"> <!--Tabela dos itens comprados-->
+			<h1>Lista de Produtos</h1>
+			<hr>
+			<div id=tabelaItens>
+				<table id="tableID" class="display cell-border compact">
+					<thead>
+						<tr>
+							<th>Linha</th>
+							<th>Produto</th>
+							<th>Valor unitário</th>
+							<th>Quantidade</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<hr>
+			<div id="totalContainer">
+				<label>TOTAL: R$ </label>
+				<input type="text" value="0.00" id="totalInput" readonly>
+
+			</div>
+		</div>
+
+		<div id="All-Produtos"> <!--Carousel-->
+			<section>
+				<div class="container">
+					<div class="row">
+						<div class="col-3">
+							<a class="btn btn-primary" href="#carouselExampleIndicators2" role="button"
+								data-slide="prev">
+								<i class="fa fa-arrow-left"></i>
+							</a>
+						</div>
+
+						<div class="col-6 text-center"> <!--Div para os botoes-->
+							<button class="btn btn-success" data-toggle="modal"
+								data-target="#myModal">Finalizar</button>
+							<button class="btn btn-danger" data-toggle="modal"
+								data-target="#CancelamentoModal">Cancelamento</button>
+						</div>
+
+						<div class="col-3 text-right">
+							<a class="btn btn-primary" href="#carouselExampleIndicators2" role="button"
+								data-slide="next">
+								<i class="fa fa-arrow-right"></i>
+							</a>
+						</div>
+
+						<div class="col-12">
+							<div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel"
+								data-interval="false">
+								<div class="carousel-inner">
+
+									<div class="carousel-item active"> <!--Primeiras 3 imagens-->
+										<div class="row">
+											<div class="col-md-4 mb-3"> <!-- Primeiro card-->
+											</div>
+
+											<div class="col-md-4 mb-3"> <!-- Segundo card-->
+
+											</div>
+
+											<div class="col-md-4 mb-3"> <!-- Terceiro card-->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Preencha as informações abaixo</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Formulário para solicitar o preenchimento do campo -->
+						<div class="form-group">
+							<label for="campo">Quanto o cliente está entregando?</label>
+							<input type="number" value="1" min="1" step="any" class="form-control" id="valorInformado">
+
+							<label for="campo">Quanto vai ser o seu troco?</label>
+							<input type="number" value="0" min="1" step="any" class="form-control" id="trocoInformado">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+						<button type="button" class="btn btn-primary" onclick="Finalizar()">Salvar</button>
+						<!-- Botão para salvar o campo preenchido -->
+					</div>
+				</div>
+			</div>
+		</div> <!-- Modal para solicitar as informações -->
+
+		<div class="modal fade" id="RespostaFinal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div id="ErrorIcon" class="IconPopUp">
+							<h1 id="TextoResposta">Testando</h1>
+							<img src="https://cdn-icons-png.flaticon.com/512/9972/9972749.png">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+					</div>
+				</div>
+			</div>
+		</div> <!-- De resposta -->
+
+		<div class="modal fade" id="CancelamentoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Preencha as informações abaixo</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Formulário para solicitar o preenchimento do campo -->
+						<div class="form-group">
+							<label for="campo">Qual linha deve ser excluida?</label>
+							<input type="number" min="1" step="any" class="form-control" id="linhaQuerCancelar">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+						<button type="button" class="btn btn-primary" onclick="Cancelamento()">Salvar</button>
+						<!-- Botão para salvar o campo preenchido -->
+					</div>
+				</div>
+			</div>
+		</div> <!-- Modal para solicitar as informações -->
+
+	</div>
+</body>
+<footer>
+	<script type=" text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+	<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+	<script type='text/javascript'
+		src='https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js'></script>
+	<script type='text/javascript' src="js/script.js"></script>
+</footer>
+
+</html>

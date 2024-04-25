@@ -1,0 +1,170 @@
+.container1 {
+	width: 100%;
+	height: calc(100vh - 100px);
+	background-color: blue;
+	padding: 0;
+	margin: 0;
+}
+
+body,
+html {
+	margin: 0;
+	padding: 0;
+}
+
+#logo {
+	width: 100%;
+	height: 90px;
+	background-color: rgb(112, 104, 224);
+	display: flex;
+}
+
+
+#logo h1 {
+	color: #ffea00;
+	padding-top: 15px;
+	font-size: 60px;
+	font-family: 'Arturo';
+	font-weight: bold;
+	text-shadow: 4px 0 #ce2222, -4px 0 #ce2222, 0 2px #ce2222, 0 -4px #ce2222,
+		2px 2px #ce2222, -2px -2px #ce2222, 2px -2px #ce2222, -2px 2px #ce2222;
+}
+
+#logo img {
+	width: 95px;
+	height: 90px;
+	padding-right: 10px;
+	margin-left: 20px;
+}
+
+#Lista-Produtos {
+	width: 40%;
+	height: calc(100vh - 90px);
+	background-color: rgb(65, 89, 226);
+	float: left;
+}
+
+#Lista-Produtos h1 {
+	color: white;
+	font-family: 'Lucida Sans';
+	padding: 10px 0 0 15px;
+}
+
+#Lista-Produtos table {
+	padding-top: 5px;
+	width: 90%
+}
+
+
+#All-Produtos {
+	width: 60%;
+	height: calc(100vh - 90px);
+	background-color: rgb(244, 151, 138);
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2px;
+	gap: 10px;
+}
+
+section {
+	padding: 0%;
+}
+
+#Botoes {
+	width: 100%;
+}
+
+.NomeProduto {
+	color: black;
+	font-weight: bold;
+	box-sizing: border-box;
+	margin-top: 3px;
+}
+
+.produto img {
+	width: 50%;
+}
+
+#tableID thead th {
+	background-color: white;
+}
+
+.cartao {
+	padding: 1rem 0.5rem !important;
+}
+
+/*.cartao button {}*/
+
+.produto {
+	height: 100%;
+}
+
+#ErrorIcon .h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 80%;
+}
+
+.IconPopUp img {
+	width: 20%;
+}
+
+#RespostaFinal .modal-body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+#ErrorIcon {
+	text-align: center;
+	/* Centraliza o texto horizontalmente */
+}
+
+#ErrorIcon img {
+	display: block;
+	margin: 0 auto;
+	/* Centraliza a imagem horizontalmente */
+}
+
+#RespostaFinal .modal-dialog {
+	width: 30%;
+	height: 80%;
+	/* Define a altura do modal */
+	max-height: 80vh;
+	/* Define a altura máxima do modal como 80% da altura da janela de visualização */
+}
+
+#tabelaItens {
+	overflow-y: auto;
+	/* Adicione uma barra de rolagem vertical quando necessário */
+	height: 55vh;
+	/* Defina a altura como automática para que a div cresça conforme necessário */
+}
+
+#totalContainer {
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 10px;
+	color: white;
+	font-size: 25px;
+}
+
+#totalContainer input {
+	text-align: right;
+}
+
+.input-verde {
+	color: green;
+	border-color: green;
+	background-color: lightgreen;
+}
+
+.input-vermelho {
+	color: red;
+	border-color: red;
+	background-color: lightcoral;
+}
