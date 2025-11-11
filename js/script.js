@@ -1,6 +1,8 @@
 /* Initialization of datatable */
 var table = "";
 var tentativas = 0;
+var totalReal = 0;
+
 produtos = [
 	{ nome: 'Banana A Unidade', valor: 3.60, imagem: 'https://cdn-icons-png.flaticon.com/512/6482/6482627.png' },
 	{ nome: 'Maçã Argentina A Unidade', valor: 5.99, imagem: 'https://cdn-icons-png.flaticon.com/512/812/812900.png' },
@@ -15,6 +17,21 @@ produtos = [
 	{ nome: 'Maçã Verde A unidade', valor: 3.49, imagem: 'https://images.vexels.com/media/users/3/185223/isolated/preview/841c68d2314d6dc10c6b33480bbca0b3-maca-verde-fruta-plana.png' },
 ];
 
+const descontos = {
+  "Banana A Unidade": { tipo: "quantidade", quantidade: 3, paga: 2 },
+  "Cookies de chocolates 200g": { tipo: "percentual", porcentagem: 10 },
+  "Leite integral 1L": { tipo: "percentual", porcentagem: 50 },
+};
+
+const Pagamento = [
+	{ nome: "Dinheiro", desconto: 0, acrecimo: 0, texto:'Quanto vai ser o seu troco?'},
+	{ nome: "Cartão Crédito", desconto: 0, acrecimo: 10, texto:'Qual o valor total a pagar'},
+	{ nome: "Cartão Débito", desconto: 0, acrecimo: 0, texto:'Qual o valor restante na conta'},
+	{ nome: "Pix", desconto: 10, acrecimo: 0, texto:'Qual o valor total a pagar'},
+];
+
+var metodoPagamento = "";
+
 $(document).ready(function() {
 	table = $('#tableID').DataTable({
 		searching: false, paging: false, info: false,
@@ -22,8 +39,7 @@ $(document).ready(function() {
 			{ className: 'dt-center', targets: '_all' }
 		],
 	});
-	//Ordenar produtos por ordem alfabética
-	//produtos.sort((produto1, produto2) => produto1.nome.toUpperCase() > produto2.nome.toUpperCase() ? 1 : -1);
+	
 	preencherCarrossel(produtos);
 });
 
@@ -112,6 +128,48 @@ function calculaTotal() {
 	$('#totalInput').prop('value', total.toFixed(2));
 }
 
+function calculaTotalComDesconto() {
+    var totalBruto = 0;
+    var totalDesconto = 0;
+    var tableData = table.rows().data();
+
+    for (let i = 0; i < tableData.length; i++) {
+        var nomeProduto = tableData[i][1];
+        var valorUnitario = parseFloat(tableData[i][2].replace('R$', '').trim());
+        var quantidade = parseInt(tableData[i][3]);
+
+        var subtotal = quantidade * valorUnitario;
+        var descontoAplicado = 0;
+
+        // Verifica se o produto tem desconto
+        if (descontos[nomeProduto]) {
+            const desconto = descontos[nomeProduto];
+            
+            if (desconto.tipo === "quantidade") {
+                let grupos = Math.floor(quantidade / desconto.quantidade);
+                let descontoTotal = grupos * (desconto.quantidade - desconto.paga) * valorUnitario;
+                descontoAplicado = descontoTotal;
+                subtotal -= descontoTotal;
+            }
+
+            if (desconto.tipo === "percentual") {
+                let descontoTotal = subtotal * (desconto.porcentagem / 100);
+                descontoAplicado = descontoTotal;
+                subtotal -= descontoTotal;
+            }
+        }
+
+        totalBruto += quantidade * valorUnitario;
+        totalDesconto += descontoAplicado;
+    }
+
+    var totalFinal = totalBruto - totalDesconto;
+
+    $('#totalBruto').val(totalBruto.toFixed(2));
+    $('#descontoTotal').val("- R$ " + totalDesconto.toFixed(2));
+    $('#totalInput').val(totalFinal.toFixed(2));
+}
+
 function addItem(nomeProduto) {
 	var ultimaLinha = table.rows().data().length;
 	ultimaLinha++;
@@ -119,7 +177,8 @@ function addItem(nomeProduto) {
 		if (table.rows().data()[i][1] == nomeProduto) {
 			quantidade = parseInt(table.rows().data()[i][3]) + 1;
 			table.cell(i, 3).data(quantidade).draw();
-			calculaTotal();
+			//calculaTotal();
+			calculaTotalComDesconto();
 			return;
 		}
 	}
@@ -127,7 +186,8 @@ function addItem(nomeProduto) {
 	for (let i = 0; i < produtos.length; i++) {
 		if (produtos[i].nome == nomeProduto) {
 			table.row.add([ultimaLinha, produtos[i].nome, "R$ " + produtos[i].valor.toFixed(2), 1]).draw();
-			calculaTotal();
+			//calculaTotal();
+			calculaTotalComDesconto();
 			return;
 		}
 	}
@@ -165,6 +225,51 @@ function Finalizar() {
 	}
 }
 
+function Finalizar2() {
+    const total = totalReal;
+    const valorInformado = parseFloat($('#valorInformado').val());
+    const trocoInformado = parseFloat($('#trocoInformado').val()) || 0;
+
+    if (isNaN(total)) {
+        alert("Erro ao calcular o total da compra.");
+        return;
+    }
+
+    if (metodoPagamento === "Dinheiro") {
+        const trocoCorreto = (valorInformado - total).toFixed(2);
+        if (trocoCorreto == trocoInformado.toFixed(2)) {
+            $('#myModal').modal('hide');
+            playAudioSucesso();
+        } else {
+            playAudioError();
+            $('#TextoResposta').html("Troco incorreto!");
+            $('#RespostaFinal').modal('show');
+        }
+    } 
+    else if (metodoPagamento === "Cartão Crédito" || metodoPagamento === "Pix") {
+        // Só valida se o valor informado é igual ao total
+        if (valorInformado.toFixed(2) == totalReal) {
+            $('#myModal').modal('hide');
+            playAudioSucesso();
+        } else {
+            playAudioError();
+            $('#TextoResposta').html("Valor incorreto!");
+            $('#RespostaFinal').modal('show');
+        }
+    } 
+    else if (metodoPagamento === "Cartão Débito") {
+        const sobraEsperada = (valorInformado - total).toFixed(2);
+        if (sobraEsperada == trocoInformado.toFixed(2)) {
+            $('#myModal').modal('hide');
+            playAudioSucesso();
+        } else {
+            playAudioError();
+            $('#TextoResposta').html("Saldo incorreto!");
+            $('#RespostaFinal').modal('show');
+        }
+    }
+}
+
 function Cancelamento() {
 	var linha = document.getElementById("linhaQuerCancelar").value;
 	//linha = 2;
@@ -184,7 +289,8 @@ function Cancelamento() {
 			}
 		}
 	}
-	calculaTotal();
+	//calculaTotal();
+	calculaTotalComDesconto();
 	$('#CancelamentoModal').modal('hide');
 	//Limpar o campo
 	$("#linhaQuerCancelar").val("");
@@ -208,4 +314,59 @@ function playAudioError() {
 	audio.controls = true;
 	document.body.appendChild(audio);
 	audio.play();
+}
+
+function selecionarPagamento(tipo) {
+    $('#PagamentoModal').modal('hide');
+    metodoPagamento = tipo;
+
+    // Busca o método correspondente
+    const metodo = Pagamento.find(p => p.nome === tipo);
+    if (!metodo) {
+        console.error("Método de pagamento não encontrado:", tipo);
+        return;
+    }
+
+    // Pega o valor atual do total sem desconto/acréscimo
+    let totalAtual = parseFloat($('#totalInput').val());
+    let valorFinal = totalAtual;
+
+    // Aplica desconto/acréscimo
+    if (metodo.desconto > 0) {
+        valorFinal -= (totalAtual * (metodo.desconto / 100));
+    } else if (metodo.acrecimo > 0) {
+        valorFinal += (totalAtual * (metodo.acrecimo / 100));
+    }
+
+    // Atualiza o total visual
+    //$('#totalInput').val(valorFinal.toFixed(2));
+	totalReal = valorFinal.toFixed(2);
+	console.log(totalReal);
+    $('#metodoSelecionado').text(metodo.nome);
+
+    // Ajusta o texto do modal e quais campos mostrar
+    $('#Pergunta').text(metodo.texto);
+
+    // Limpa campos antigos
+    $('#valorInformado').val('');
+    $('#trocoInformado').val('');
+
+    // Esconde/mostra campos conforme o método
+    if (tipo === "Dinheiro") {
+        $('#labelValorInformado').text('Valor pago pelo cliente:');
+        $('#labelTrocoInformado').text('Quanto será o troco:');
+        $('#grupoTroco').show();
+    } 
+    else if (tipo === "Pix" || tipo === "Cartão Crédito") {
+        $('#labelValorInformado').text('Valor total a pagar:');
+        $('#grupoTroco').hide();
+    } 
+    else if (tipo === "Cartão Débito") {
+        $('#labelValorInformado').text('Saldo atual na conta:');
+        $('#labelTrocoInformado').text('Quanto vai sobrar:');
+        $('#grupoTroco').show();
+    }
+
+    // Exibe o modal principal
+    $('#myModal').modal('show');
 }
