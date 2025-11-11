@@ -141,7 +141,7 @@ section {
 #tabelaItens {
 	overflow-y: auto;
 	/* Adicione uma barra de rolagem vertical quando necessário */
-	height: 55vh;
+	height: 35vh;
 	/* Defina a altura como automática para que a div cresça conforme necessário */
 }
 
