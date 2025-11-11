@@ -37,9 +37,14 @@
 			</div>
 			<hr>
 			<div id="totalContainer">
-				<label>TOTAL: R$ </label>
-				<input type="text" value="0.00" id="totalInput" readonly>
-
+				<label> VALOR TOTAL: R$ </label>
+				<input type="text" value="0.00" id="totalBruto" readonly>
+				<hr>
+				<label for="descontoTotal">DESCONTOS:</label>
+  				<input type="text" value="0.00" id="descontoTotal" readonly>
+				<hr>
+				<label for="totalInput">TOTAL A PAGAR:</label>
+  				<input type="text" value="0.00" id="totalInput" readonly>
 			</div>
 		</div>
 
@@ -56,7 +61,7 @@
 
 						<div class="col-6 text-center"> <!--Div para os botoes-->
 							<button class="btn btn-success" data-toggle="modal"
-								data-target="#myModal">Finalizar</button>
+								data-target="#PagamentoModal">Finalizar</button>
 							<button class="btn btn-danger" data-toggle="modal"
 								data-target="#CancelamentoModal">Cancelamento</button>
 						</div>
@@ -105,18 +110,21 @@
 						</button>
 					</div>
 					<div class="modal-body">
-						<!-- Formulário para solicitar o preenchimento do campo -->
-						<div class="form-group">
-							<label for="campo">Quanto o cliente está entregando?</label>
-							<input type="number" value="1" min="1" step="any" class="form-control" id="valorInformado">
+						<p id="Pergunta">Selecione o método de pagamento</p>
 
-							<label for="campo">Quanto vai ser o seu troco?</label>
-							<input type="number" value="0" min="1" step="any" class="form-control" id="trocoInformado">
+						<div class="form-group">
+							<label id="labelValorInformado" for="valorInformado">Valor informado:</label>
+							<input type="number" class="form-control" id="valorInformado" step="0.01">
+						</div>
+
+						<div class="form-group" id="grupoTroco">
+							<label id="labelTrocoInformado" for="trocoInformado">Troco informado:</label>
+							<input type="number" class="form-control" id="trocoInformado" step="0.01">
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-						<button type="button" class="btn btn-primary" onclick="Finalizar()">Salvar</button>
+						<button type="button" class="btn btn-primary" onclick="Finalizar2()">Salvar</button>
 						<!-- Botão para salvar o campo preenchido -->
 					</div>
 				</div>
@@ -165,6 +173,34 @@
 				</div>
 			</div>
 		</div> <!-- Modal para solicitar as informações -->
+		
+		<!-- Modal de Método de Pagamento -->
+		<div class="modal fade" id="PagamentoModal" tabindex="-1" role="dialog" aria-labelledby="PagamentoLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="PagamentoLabel">Selecione o Método de Pagamento</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body text-center">
+					<div class="btn-group-vertical w-100">
+					<button type="button" class="btn btn-outline-primary mb-2" onclick="selecionarPagamento('Dinheiro')">💵 Dinheiro</button>
+					<button type="button" class="btn btn-outline-success mb-2" onclick="selecionarPagamento('Pix')">⚡ Pix</button>
+					<button type="button" class="btn btn-outline-secondary mb-2" onclick="selecionarPagamento('Cartão Débito')">💳 Cartão de Débito</button>
+					<button type="button" class="btn btn-outline-secondary" onclick="selecionarPagamento('Cartão Crédito')">💳 Cartão de Crédito</button>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+				</div>
+				</div>
+			</div>
+		</div>
+
 
 	</div>
 </body>
